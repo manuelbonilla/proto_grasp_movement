@@ -1,0 +1,5 @@
+<launch>
+	
+    <node  name="main_node" pkg="proto_grasp_movement" type="main" respawn="false" output="screen"/>
+
+</launch>
