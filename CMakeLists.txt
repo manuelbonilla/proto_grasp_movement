@@ -13,6 +13,9 @@ find_package(catkin REQUIRED COMPONENTS
 	tf_conversions
 	cmake_modules
 	controller_manager
+	kdl_parser
+	kdl_conversions
+
 )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -22,6 +25,7 @@ catkin_package(
   LIBRARIES proto_grasp_movement
   CATKIN_DEPENDS roscpp rviz_visual_tools tf
 #  DEPENDS system_lib
+	kdl_parser
 )
 
 # ============================================================ include 

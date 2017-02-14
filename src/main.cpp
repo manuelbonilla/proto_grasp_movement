@@ -44,8 +44,6 @@ int main(int argc, char** argv)
     pg_movement PGM;
 
     ros::Rate r(100);
-    
-
 
     while(ros::ok())
     {
