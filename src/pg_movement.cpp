@@ -562,8 +562,8 @@ void pg_movement::manager()
 	if(!flag_which_finger_  && !flag_grasp_ )
 	{
 		handClosure(0.0);
-		// kukaCircle();
-		kukaRect();
+		kukaCircle();
+		// kukaRect();
 	}
 	else
 	{	
