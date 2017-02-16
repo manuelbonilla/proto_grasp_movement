@@ -59,7 +59,6 @@ private:
     std::string finger_name_;	
     int cg_; // count_grasp_
 
-    bool switchControllers(std::vector<std::string> target_controllers, std::vector<std::string> running_controllers);
 
     void homePosition();
 
@@ -68,21 +67,19 @@ private:
     geometry_msgs::Wrench zero_wrench_;
     lwr_controllers::CartesianImpedancePoint msg_;
 
-	void kukaTrajectory();
+	void kukaCircle();
+	void kukaRect();
 	float degree_;
 	rviz_visual_tools::RvizVisualToolsPtr visual_tools_;
 	ros::Publisher pub_command_;
+	float A_,offset_x_,offset_y_,offset_z_,delta_degree_; 
 
 
-	void graspDatabase();
-	void openAndLoadDB(Eigen::MatrixXf &Qrotation, Eigen::MatrixXf &translation);
-	Eigen::MatrixXf Q_,T_;
-	int rows_num_;
 
 	void tondoDatabase();
 	void openTondoDatabase(float& x,float& y,float& z,float& angle);
 
-	void interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish, bool sgn);
+	void interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish);
 	void finishPosition(float z);
 
 
@@ -96,14 +93,22 @@ private:
 	bool flag_grasp_;	
 
 
+
+	// using new database
+	/*
+	void graspDatabase();
+	void openAndLoadDB(Eigen::MatrixXf &Qrotation, Eigen::MatrixXf &translation);
+	Eigen::MatrixXf Q_,T_;
+	int rows_num_;
+
 	//subscriber
 	void checkError(control_msgs::JointTrajectoryControllerState msg);
 	ros::Subscriber sub_error_joint_trajectory_;
 	bool flag_error_joint_trajectory_;
 
+    bool switchControllers(std::vector<std::string> target_controllers, std::vector<std::string> running_controllers);
 
 	Eigen::Vector4f QxQ(Eigen::Vector4f Q_1, Eigen::Vector4f Q_2);
-	Eigen::Vector4f ConjQ(Eigen::Vector4f Q_in); 
-	void skewSymmetric(Eigen::Vector4f v, Eigen::Matrix<double,3,3> &skew_mat);
-
+	Eigen::Vector4f ConjQ(Eigen::Vector4f Q_in);
+	*/
 };
