@@ -50,6 +50,7 @@ public:
 	~pg_movement();
 
 	void manager();
+	void homePosition();
 
 private:
 
@@ -59,8 +60,8 @@ private:
     std::string finger_name_;	
     int cg_; // count_grasp_
 
-
-    void homePosition();
+    int trajectory_type;
+    double traj_time;
 
     Eigen::Affine3d pose_;
     lwr_controllers::Stiffness zero_stiffness_;
@@ -79,7 +80,7 @@ private:
 	void tondoDatabase();
 	void openTondoDatabase(float& x,float& y,float& z,float& angle);
 
-	void interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish);
+	int interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish, double traj_time_local=2.0);
 	void finishPosition(float z);
 
 

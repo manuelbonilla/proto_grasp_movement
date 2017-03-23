@@ -12,11 +12,11 @@
     <arg name="head_enabled" default="false"/>
     <arg name="left_arm_enabled" default="false"/>
     <arg name="left_hand_enabled" default="false"/>
-    <arg name="right_arm_enabled" default="true"/>
-    <arg name="right_hand_enabled" default="true"/>
+    <arg name="right_arm_enabled" default="false"/>
+    <arg name="right_hand_enabled" default="false"/>
 
     <!-- choose whether or not to start the full robot simulation -->
-    <arg name="use_robot_sim" default="false"/>
+    <arg name="use_robot_sim" default="true"/>
 
     <!-- LAUNCH IMPLEMENTATION -->
 
@@ -34,12 +34,12 @@
     <group if="$(arg use_joint_state_publisher)">
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
             <param name="use_gui" value="$(arg gui)"/>
-            <!-- listens to each part -->
+            <param name="rate" value="500"/>
             <rosparam param="source_list">[/left_arm/joint_states,/left_hand/joint_states,/right_arm/joint_states,/right_hand/joint_states,/head/joint_states]</rosparam>
         </node>
     </group>
 
-    <param name="publish_frequency" value="100"/>
+    <param name="publish_frequency" value="500"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  />
 
     <group if="$(arg use_rviz)">
@@ -74,21 +74,12 @@
 
         <!-- calibration transformations -->
         <include file="$(find vito_description)/launch/fake_calibration.launch.xml"/>
-        <include file="$(find kit_head_description)/launch/openni_axes.launch"/>
 
         <!-- spawn the environment in gazebo -->
         <!--param name="environment_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/environment.urdf.xacro"/>
         <node name="spawn_env" pkg="gazebo_ros" type="spawn_model" args="-param environment_description -urdf -model environment -x 0 -y 0 -z 1.0 -R 0 -P 0 -Y 0" respawn="false" output="screen"/-->
     </group>
     <!-- calibration transformations -->
-    <group unless="$(arg use_robot_sim)">
-        <group if="$(arg use_calibration_package)">
-            <!-- it takes the last calibration performed, you can call calibrate and it will overwrite the yaml file -->
-            <!-- <include file="$(find calibration)/launch/asus_head_vito_broadcaster.launch"/> -->
-            <!-- for the fake eyes, which are not still included here -->
-        </group>
-    </group>
-
 
     <!-- #### components -->
 
@@ -110,7 +101,9 @@
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller cartesian_impedance_controller "/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller "/>
+        <node name="controller_stopper" pkg="controller_manager" type="spawner" args="--stopped cartesian_impedance_controller --shutdown-timeout 2"/>
+
 
     </group>
 

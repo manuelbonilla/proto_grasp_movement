@@ -45,6 +45,8 @@ int main(int argc, char** argv)
 
     ros::Rate r(50);
 
+    PGM.homePosition();
+
     while(ros::ok())
     {
         PGM.manager();

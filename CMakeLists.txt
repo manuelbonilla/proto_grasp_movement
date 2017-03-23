@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 	controller_manager
 	kdl_parser
 	kdl_conversions
+	qb_interface
 
 )
 
@@ -23,7 +24,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES proto_grasp_movement
-  CATKIN_DEPENDS roscpp rviz_visual_tools tf
+  CATKIN_DEPENDS roscpp rviz_visual_tools tf qb_interface
 #  DEPENDS system_lib
 	kdl_parser
 )

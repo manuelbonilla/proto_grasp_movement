@@ -7,11 +7,9 @@ Panels:
         - /Global Options1
         - /Status1
         - /Grid1
-        - /RobotModel1
         - /RobotModel1/Links1
-        - /MarkerArray1
-      Splitter Ratio: 0.721519
-    Tree Height: 359
+      Splitter Ratio: 0.721518993
+    Tree Height: 724
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -20,7 +18,7 @@ Panels:
       - /2D Nav Goal1
       - /Publish Point1
     Name: Tool Properties
-    Splitter Ratio: 0.588679
+    Splitter Ratio: 0.588679016
   - Class: rviz/Views
     Expanded:
       - /Current View1
@@ -40,7 +38,7 @@ Visualization Manager:
       Color: 160; 160; 164
       Enabled: true
       Line Style:
-        Line Width: 0.03
+        Line Width: 0.0299999993
         Value: Lines
       Name: Grid
       Normal Cell Count: 0
@@ -62,6 +60,11 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        ft_surface:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_arm_1_link:
           Alpha: 1
           Show Axes: false
@@ -182,6 +185,185 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
         left_arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_clamp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_index_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_index_fake_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_index_fake_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_index_fake_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_index_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_index_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_index_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_invisible_wire_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_kuka_coupler:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_kuka_coupler_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_little_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_little_fake_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_little_fake_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_little_fake_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_little_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_little_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_little_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_middle_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_middle_fake_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_middle_fake_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_middle_fake_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_middle_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_middle_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_middle_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_palm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_ring_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_ring_fake_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_ring_fake_link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_ring_fake_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_ring_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_ring_middle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_ring_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_softhand_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_thumb_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_thumb_fake_link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_thumb_fake_link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_thumb_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_hand_thumb_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -570,9 +752,23 @@ Visualization Manager:
       Enabled: true
       Length: 1
       Name: Axes
-      Radius: 0.1
+      Radius: 0.100000001
       Reference Frame: <Fixed Frame>
       Value: true
+    - Class: rviz/TF
+      Enabled: false
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        {}
+      Update Interval: 0
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -597,30 +793,32 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.22678
+      Distance: 2.49399352
       Enable Stereo Rendering:
-        Stereo Eye Separation: 0.06
+        Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.498095
-        Y: 0.403205
-        Z: 0.39548
+        X: -0.498095006
+        Y: 0.403205007
+        Z: 0.395480007
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.0500000007
       Name: Current View
-      Near Clip Distance: 0.01
-      Pitch: 0.194798
+      Near Clip Distance: 0.00999999978
+      Pitch: 0.194797993
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.63511
+      Yaw: 2.6351099
     Saved: ~
 Window Geometry:
   Displays:
-    collapsed: true
-  Height: 1028
-  Hide Left Dock: true
+    collapsed: false
+  Height: 1043
+  Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000019d0000037dfc0200000009fb000000100044006900730070006c00610079007300000000280000037d000000dd00fffffffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006700000001c9000001f80000000000000000000000010000010f00000396fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002800000396000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000002000007450000019bfc0100000003fb0000000c00430061006d00650072006100000002ca000002490000000000000000fb0000000c00430061006d0065007200610000000415000003300000000000000000fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000003a20000003bfc0100000002fb0000000800540069006d00650100000000000003a2000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000000003a20000037d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000019d00000368fc0200000009fb000000100044006900730070006c006100790073010000004200000368000000dc00fffffffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006300fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006700000001c9000001f80000000000000000000000010000010f00000396fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002800000396000000b500fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000002000007450000019bfc0100000003fb0000000c00430061006d00650072006100000002ca000002490000000000000000fb0000000c00430061006d0065007200610000000415000003300000000000000000fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000078000000042fc0100000002fb0000000800540069006d00650100000000000007800000027000fffffffb0000000800540069006d00650100000000000004500000000000000000000005dd0000036800000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -629,6 +827,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 930
-  X: 1969
-  Y: 14
+  Width: 1920
+  X: 0
+  Y: 0

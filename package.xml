@@ -47,6 +47,7 @@
   <build_depend>controller_manager</build_depend>
   <build_depend>kdl_parser</build_depend>
   <build_depend>kdl_conversions</build_depend>
+  <build_depend>qb_interface</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>rviz_visual_tools</run_depend>
@@ -55,6 +56,8 @@
   <run_depend>controller_manager</run_depend>
   <run_depend>kdl_parser</run_depend>
   <run_depend>kdl_conversions</run_depend>
+  <run_depend>qb_interface</run_depend>
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

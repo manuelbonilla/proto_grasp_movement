@@ -1,5 +1,7 @@
 <launch>
 	
+	<param name="trajectory_type" value="1"/>
+	<param name="traj_time" value="4"/>
     <node  name="main_node" pkg="proto_grasp_movement" type="main" respawn="false" output="screen"/>
 
 </launch>
