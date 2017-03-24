@@ -147,6 +147,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 	while (c <= 1 )
 	{
 		// update orientation
+		double ctanh(std::tanh(4*c));
 		if (c <= 1)
 			q_err = q_start.slerp(c, q_finish);
 
@@ -154,7 +155,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 
 		// updata translation
 		if (translation_error > th)
-			x_next.translation() = x_now.translation() + c * (x_finish.translation() - x_now.translation() ) ;
+			x_next.translation() = x_now.translation() + ctanh * (x_finish.translation() - x_now.translation() ) ;
 
 		// visual tool
 		visual_tools_->publishAxis(x_next, 0.1, 0.01, "axis");
@@ -165,7 +166,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 		pub_command_.publish(msg_);
 		ros::spinOnce();
 
-		c += (1.0 / frec) / traj_time_local;
+		ctanh += (1.0 / frec) / traj_time_local;
 
 		if(flag_which_finger_ && !flag_grasp_)
 		{
