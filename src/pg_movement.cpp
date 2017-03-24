@@ -13,6 +13,8 @@ pg_movement::pg_movement()
 	trajectory_type = 1;
 	n_.param<int>("/trajectory_type", trajectory_type, 1);
 	n_.param<double>("/traj_time", traj_time, 2.0);
+	n_.param<double>("/spin_rate", spin_rate, 300.0);
+	n_.param<double>("/box_size", box_size, 0.15);
 
 
 
@@ -142,8 +144,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 	Eigen::Quaterniond q_finish(x_finish_frame.orientation.w, x_finish_frame.orientation.x, x_finish_frame.orientation.y, x_finish_frame.orientation.z);
 	Eigen::Quaterniond q_err;
 
-	double frec(300.0);
-	ros::Rate r(frec);
+	ros::Rate r(spin_rate);
 	while (c <= 1 )
 	{
 		// update orientation
@@ -166,7 +167,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 		pub_command_.publish(msg_);
 		ros::spinOnce();
 
-		c += (1.0 / frec) / traj_time_local;
+		c += (1.0 / spin_rate) / traj_time_local;
 
 		if(flag_which_finger_ && !flag_grasp_)
 		{
@@ -231,7 +232,6 @@ void pg_movement::kukaCircle()
 void pg_movement::kukaRect()
 {
 
-	double box_size(0.15);
 	Eigen::Affine3d x_new;
 	int flag_local = 1;
 	while( flag_local == 1)

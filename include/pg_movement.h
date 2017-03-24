@@ -62,6 +62,8 @@ private:
 
     int trajectory_type;
     double traj_time;
+    double spin_rate;
+    double box_size;
 
     Eigen::Affine3d pose_;
     lwr_controllers::Stiffness zero_stiffness_;
