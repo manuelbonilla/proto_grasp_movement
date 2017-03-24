@@ -24,6 +24,8 @@
 #include <trajectory_msgs/JointTrajectory.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/String.h>
+#include <geometry_msgs/Pose.h>
+
 #include <rviz_visual_tools/rviz_visual_tools.h>
 #include <controller_manager/controller_manager.h>
 #include <controller_manager_msgs/ListControllers.h>
@@ -74,8 +76,9 @@ private:
 	void kukaRect();
 	float degree_;
 	rviz_visual_tools::RvizVisualToolsPtr visual_tools_;
-	ros::Publisher pub_command_;
+	ros::Publisher pub_command_,pub_command_t;
 	float A_,offset_x_,offset_y_,offset_z_,delta_degree_; 
+	float stiffness_t, stiffness_r, damping, wrench; 
 
 
 

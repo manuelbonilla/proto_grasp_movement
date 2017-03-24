@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 
     pg_movement PGM;
 
-    ros::Rate r(50);
+    ros::Rate r(300);
 
     PGM.homePosition();
 

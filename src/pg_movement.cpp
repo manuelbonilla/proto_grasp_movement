@@ -6,7 +6,10 @@ pg_movement::pg_movement()
 
 	visual_tools_.reset(new rviz_visual_tools::RvizVisualTools("vito_anchor", "/rviz_visual_markers"));
 	visual_tools_->deleteAllMarkers();
+	//check which controller you want to use; now it is teleoperation_controller
 	pub_command_ = n_.advertise<lwr_controllers::CartesianImpedancePoint>("/right_arm/cartesian_impedance_controller/command", 0);
+	pub_command_t = n_.advertise<geometry_msgs::Pose>("/right_arm/teleoperation_controller/command", 0);
+
 	hand_publisher_ = n_.advertise<std_msgs::Float64>("/right_hand/hand_position", 1000);
 	flag_which_finger_ = flag_grasp_ = false;
 
@@ -16,46 +19,48 @@ pg_movement::pg_movement()
 	n_.param<double>("/spin_rate", spin_rate, 300.0);
 	n_.param<double>("/box_size", box_size, 0.15);
 
+	n_.param<float>("/A_",A_,0.10);
+	n_.param<float>("/offser_x_",offset_x_,-0.80);
+	n_.param<float>("/offser_y_",offset_y_,0.40);
+	n_.param<float>("/offser_z_",offset_z_,0.10);
+	n_.param<float>("/delta_degree_",delta_degree_,0.30);
+
+	n_.param<float>("/stiffness_t",stiffness_t,2000);
+	n_.param<float>("/stiffness_r",stiffness_r,150);
+	n_.param<float>("/damping",damping,0.7);
+	n_.param<float>("/wrench",wrench,0.0);
 
 
 	pkg_path_ = ros::package::getPath("proto_grasp_movement");
 
 
 	// init msg for publisher
-	zero_stiffness_.x = 800.0;
-	zero_stiffness_.y = 800.0;
-	zero_stiffness_.z = 800.0;
-	zero_stiffness_.rx = 50.0;
-	zero_stiffness_.ry = 50.0;
-	zero_stiffness_.rz = 50.0;
+	zero_stiffness_.x = stiffness_t;
+	zero_stiffness_.y = stiffness_t;
+	zero_stiffness_.z = stiffness_t;
+	zero_stiffness_.rx = stiffness_r;
+	zero_stiffness_.ry = stiffness_r;
+	zero_stiffness_.rz = stiffness_r;
 	msg_.k_FRI = zero_stiffness_;
 
-	zero_stiffness_.x = 0.2;
-	zero_stiffness_.y = 0.2;
-	zero_stiffness_.z = 0.2;
-	zero_stiffness_.rx = 0.2;
-	zero_stiffness_.ry = 0.2;
-	zero_stiffness_.rz = 0.2;
+	zero_stiffness_.x = damping;
+	zero_stiffness_.y = damping;
+	zero_stiffness_.z = damping;
+	zero_stiffness_.rx = damping;
+	zero_stiffness_.ry = damping;
+	zero_stiffness_.rz = damping;
 	msg_.d_FRI = zero_stiffness_;
 
-	zero_wrench_.force.x = 0;
-	zero_wrench_.force.y = 0;
-	zero_wrench_.force.z = 0;
-	zero_wrench_.torque.x = 0;
-	zero_wrench_.torque.y = 0;
-	zero_wrench_.torque.z = 0;
+	zero_wrench_.force.x = wrench;
+	zero_wrench_.force.y = wrench;
+	zero_wrench_.force.z = wrench;
+	zero_wrench_.torque.x = wrench;
+	zero_wrench_.torque.y = wrench;
+	zero_wrench_.torque.z = wrench;
 	msg_.f_FRI = zero_wrench_;
 
 	visual_tools_->deleteAllMarkers();
 
-
-	A_ = 0.15;
-
-	offset_x_ = -0.92;
-	offset_y_ = 0.7;
-	offset_z_ = 0.135; //0.123 side
-
-	delta_degree_ = 1;
 	degree_ = 0;
 
 
@@ -76,23 +81,18 @@ void pg_movement::homePosition()
 
 	tf::TransformListener listener;
 	tf::StampedTransform t;
-	// bool flag_tf = false;
 
-	// while (!flag_tf)
-	// {
 	ros::spinOnce();
 	try
 	{
 		listener.waitForTransform(link_from, link_to, ros::Time(0), ros::Duration(20)); //ros::Duration(2.5)
 		listener.lookupTransform(link_to, link_from,  ros::Time(0), t);
-		// flag_tf = true;
 	}
 	catch (tf::TransformException ex)
 	{
 		ROS_ERROR("%s", ex.what());
 		ros::Duration(1.0).sleep();
 	}
-	// }
 
 	Eigen::Quaterniond q_init;
 	Eigen::Vector3d v_init;
@@ -108,7 +108,6 @@ void pg_movement::homePosition()
 	pose_home.translation() = Eigen::Vector3d( offset_x_ + A_ , offset_y_ , offset_z_ ); // translate x,y,z
 
 	interpolation(pose_init, pose_home, traj_time);
-	//waiting for interpolation...
 
 	std::cout << "\r\n\n\n\033[32m\033[1mHome Position \033[0m" << std::endl;
 	std::cout << "\r\n\n\n\033[32m\033[1mPress to continue.. \033[0m" << std::endl;
@@ -145,7 +144,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 	Eigen::Quaterniond q_err;
 
 	ros::Rate r(spin_rate);
-	while (c <= 1 )
+	while (c <= 1 && ros::ok())
 	{
 		// update orientation
 		double ctanh(std::tanh(4*c));
@@ -164,7 +163,10 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 
 		// set control
 		tf::poseEigenToMsg(x_next, msg_.x_FRI);
+		geometry_msgs::Pose pose;
+		pose = msg_.x_FRI;
 		pub_command_.publish(msg_);
+		pub_command_t.publish(pose);
 		ros::spinOnce();
 
 		c += (1.0 / spin_rate) / traj_time_local;
@@ -174,12 +176,12 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 			pose_ = x_next;
 			return 0;
 		}
-
 		r.sleep();
 	}
 
+	// sleep(1.0);
 	// update global pose_ for next steps
-	pose_ = x_finish;
+	pose_ = x_next;
 	return 1;
 }
 
@@ -196,33 +198,38 @@ void pg_movement::kukaCircle()
 	float theta = 0;
 	float h = 0;
 
+	// while(ros::ok())
+	// {
+		if (degree_ <= 360)
+		{
+			// rviz print
+			degree_ += delta_degree_;
+			theta = degree_ * M_PI / 180;
+			x =  offset_x_ + A_ * cos(theta);
+			y =  offset_y_ + A_ * sin(theta);
+			z =  offset_z_ + h;
 
-	if (degree_ <= 360)
-	{
-		// rviz print
-		degree_ += delta_degree_;
-		theta = degree_ * M_PI / 180;
-		x =  offset_x_ + A_ * cos(theta);
-		y =  offset_y_ + A_ * sin(theta);
-		z =  offset_z_ + h;
+			pose_ = Eigen::AngleAxisd(M_PI / 2, Eigen::Vector3d::UnitY()) * Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()) ; // rotate along "AXIS" axis by 90 degrees
+			pose_.translation() = Eigen::Vector3d( x, y, z ); // translate x,y,z
 
-		pose_ = Eigen::AngleAxisd(M_PI / 2, Eigen::Vector3d::UnitY()) * Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()) ; // rotate along "AXIS" axis by 90 degrees
-		pose_.translation() = Eigen::Vector3d( x, y, z ); // translate x,y,z
+			printf("Publishing in Circle   %f\n", degree_);
+			visual_tools_->publishAxis(pose_, 0.1, 0.01, "axis");
+			visual_tools_->trigger();
 
-		printf("Publishing in Circle   %f\n", degree_);
-		visual_tools_->publishAxis(pose_, 0.1, 0.01, "axis");
-		visual_tools_->trigger();
-
-		// set control
-		tf::poseEigenToMsg(pose_, msg_.x_FRI);
-		pub_command_.publish(msg_);
-		ros::spinOnce();
-	}
-	else
-	{
-		visual_tools_->deleteAllMarkers();
-		degree_ = 0;
-	}
+			// set control
+			tf::poseEigenToMsg(pose_, msg_.x_FRI);
+			geometry_msgs::Pose pose;
+			pose = msg_.x_FRI;
+			pub_command_.publish(msg_);
+			pub_command_t.publish(pose);
+			ros::spinOnce();
+		}
+		else
+		{
+			visual_tools_->deleteAllMarkers();
+			degree_ = 0;
+		}
+	// }
 }
 
 

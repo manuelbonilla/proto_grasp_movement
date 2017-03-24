@@ -27,3 +27,11 @@ Some parameters can be changed: x_offset_, y_offset_, z_offset_ indicate the tra
 ## TO DO
 
 The commented part is referred to the possibilities to use a new data set to make grasp and to switch controllers to generate different trajectories.
+
+
+rosservice call /right_arm/controller_manager/switch_controller "start_controllers: ['teleoperation_controller']
+stop_controllers: ['joint_trajectory_controller']
+strictness: 2" 
+
+
+rostopic pub /right_arm/teleoperation_controller/start_controller std_msgs/Bool "data: true" 

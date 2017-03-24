@@ -1,7 +1,19 @@
 <launch>
 	
-	<param name="trajectory_type" value="1"/>
-	<param name="traj_time" value="4"/>
+	<param name="trajectory_type" value="2"/>
+	<param name="traj_time" value="3"/>
+	<param name="spin_rate" value="300"/>
+	<param name="box_size" value="0.15"/>
+	<param name="A_" value="0.10"/>
+	<param name="offset_x_" value="-0.80"/>
+	<param name="offset_y_" value="0.40"/>
+	<param name="offset_z_" value="0.10"/>
+	<param name="stiffness_t" value="2000.0"/>
+	<param name="stiffness_r" value="150.0"/>
+	<param name="damping" value="0.7"/>
+	<param name="wrench" value="0.0"/>
+
+
     <node  name="main_node" pkg="proto_grasp_movement" type="main" respawn="false" output="screen"/>
 
 </launch>
