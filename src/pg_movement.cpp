@@ -149,7 +149,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 		// update orientation
 		double ctanh(std::tanh(4*c));
 		if (c <= 1)
-			q_err = q_start.slerp(c, q_finish);
+			q_err = q_start.slerp(ctanh, q_finish);
 
 		x_next = Eigen::AngleAxisd(q_err);
 
@@ -166,7 +166,7 @@ int pg_movement::interpolation(Eigen::Affine3d x_start, Eigen::Affine3d x_finish
 		pub_command_.publish(msg_);
 		ros::spinOnce();
 
-		ctanh += (1.0 / frec) / traj_time_local;
+		c += (1.0 / frec) / traj_time_local;
 
 		if(flag_which_finger_ && !flag_grasp_)
 		{
